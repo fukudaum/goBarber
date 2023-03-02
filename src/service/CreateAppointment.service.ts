@@ -10,10 +10,10 @@ interface Request {
 class CreateAppointmentService {
     constructor(private appointmentsRepository: AppointmentsRepository) {}
 
-    public execute({ provider, date }: Request): Appointment {
+    public async execute({ provider, date }: Request): Promise<Appointment> {
         const appointmentDate = startOfHour(date);
 
-        const findAppointmentInSameDate = this.appointmentsRepository.findByDate(appointmentDate);
+        const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(date);
 
         if(findAppointmentInSameDate) {
             throw Error('This appointment is already booked!');
@@ -23,6 +23,8 @@ class CreateAppointmentService {
             provider,
             date: appointmentDate
         });
+
+        await this.appointmentsRepository.save(appointment);
 
         return appointment;
     }
