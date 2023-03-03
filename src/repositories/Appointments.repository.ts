@@ -1,17 +1,9 @@
-import Appointment from "../models/Appointment";
-import { Repository } from "typeorm";
+// import Appointment from "../models/Appointment";
+// import { Repository } from "typeorm";
+// import { AppDataSource } from "../database/app-data-source";
 
-class AppointmentsRepository extends Repository<Appointment>{
-    public async findByDate(date: Date): Promise<Appointment | null> {
 
-        const findAppointment = await this.findOne({
-            where: {
-                date
-            }
-        })
+// class AppointmentsRepository extends Repository<Appointment>{
+// }
 
-        return findAppointment || null;
-    }
-}
-
-export default AppointmentsRepository;
+// export default AppointmentsRepository;

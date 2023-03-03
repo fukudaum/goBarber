@@ -1,4 +1,3 @@
-import { uuid } from "uuidv4";
 import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('appointments')
@@ -6,7 +5,7 @@ class Appointment {
     @PrimaryGeneratedColumn('uuid')
     id: string;
 
-    @Column()
+    @Column({ type: 'text'})
     provider: string;
 
     @Column('timestamp with time zone')
