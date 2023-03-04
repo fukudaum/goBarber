@@ -7,7 +7,10 @@ AppDataSource.initialize().then(() => {
 
     app.use(express.json());
 
-    app.use(routes);
+    // app.use(routes);
+    app.get('/', (req, res) => {
+        return res.json('tudo certo');
+    })
 
     return app.listen(process.env.PORT, () => {
         console.log('🤞🤞 Server started on port 3333');

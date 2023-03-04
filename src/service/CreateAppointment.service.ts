@@ -1,6 +1,6 @@
 import { startOfHour } from "date-fns";
 import { AppDataSource } from "../data-source";
-import Appointment from "../models/Appointment";
+import Appointment from "../entities/Appointment";
 
 interface Request {
     provider: string,
