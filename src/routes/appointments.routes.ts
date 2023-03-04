@@ -6,9 +6,9 @@ import { AppDataSource } from "../data-source";
 
 const appointmentsRouter = Router();
 
-appointmentsRouter.get('/', (request: Request, response: Response) => {
+appointmentsRouter.get('/', async(request: Request, response: Response) => {
     const appointmentsRepository = AppDataSource.getRepository(Appointment);
-    const appointments = appointmentsRepository.find();
+    const appointments = await appointmentsRepository.find();
 
     return response.json(appointments);
 });

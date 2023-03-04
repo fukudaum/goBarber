@@ -15,10 +15,9 @@ class CreateAppointmentService {
         const appointmentsRepository = AppDataSource.getRepository(Appointment);
         const findAppointmentInSameDate = await appointmentsRepository.findOne({
             where: {
-                date
+                date: appointmentDate
             }
         });
-
         if(findAppointmentInSameDate) {
             throw Error('This appointment is already booked!');
         }
