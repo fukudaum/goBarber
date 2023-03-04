@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "nodemon --exec ts-node ./src/server.ts",
     "dev:server": "ts-node-dev --inspect --ignore-watch node_modules src/server.ts",
-    "migration:create": "typeorm migration:create Appointments",
+    "migration:create": "npm run typeorm -- -d ./data-source.ts migration:generate ./migrations/$npm_config_name",
     "migration:generate": "typeorm-ts-node-commonjs -d ./src/data-source.ts migration:generate ./src/migrations/default",
     "migration:run": "typeorm-ts-node-commonjs -d ./src/data-source.ts migration:run"
   },

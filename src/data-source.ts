@@ -1,6 +1,8 @@
 import 'dotenv/config';
 import 'reflect-metadata';
 import { DataSource } from "typeorm";
+import Appointment from './entities/Appointment';
+import { default1677898942399 } from './migrations/1677898942399-default';
 
 const port = process.env.DB_PORT as number | undefined;
 
@@ -13,7 +15,7 @@ export const AppDataSource = new DataSource({
     database: process.env.DB_NAME,
     synchronize: true,
     logging: true,
-    entities: [`${__dirname}/**/entities/*.{ts,js}`],
+    entities: [Appointment],
     subscribers: [`${__dirname}/subscriber/**/*{.js,.ts}`],
-    migrations: [`${__dirname}/**/migrations/*.{ts,js}`]
+    migrations: [default1677898942399]
 });
