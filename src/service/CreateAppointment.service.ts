@@ -1,6 +1,7 @@
 import { startOfHour } from "date-fns";
-import { AppDataSource } from "../data-source";
 import Appointment from "../entities/Appointment";
+import { AppointmentsRepository } from "../repositories/appointments.repository";
+import { UsersRepository } from "../repositories/users.repository";
 
 interface Request {
     provider: string,
@@ -8,26 +9,26 @@ interface Request {
 }
 
 class CreateAppointmentService {
-    constructor() {}
+    constructor(private appointmentsRepository: AppointmentsRepository,
+        private usersRepository: UsersRepository) {}
 
     public async execute({ provider, date }: Request): Promise<Appointment> {
         const appointmentDate = startOfHour(date);
-        const appointmentsRepository = AppDataSource.getRepository(Appointment);
-        const findAppointmentInSameDate = await appointmentsRepository.findOne({
-            where: {
-                date: appointmentDate
-            }
-        });
+        const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(appointmentDate);
+
+        const findUser = await this.usersRepository.findByEmail(provider);
+
+        if(!findUser) {
+            throw Error('Provider not found!');
+        }
+
         if(findAppointmentInSameDate) {
             throw Error('This appointment is already booked!');
         }
 
-        const appointment = appointmentsRepository.create({
-            provider,
-            date: appointmentDate
-        });
-
-        await appointmentsRepository.save(appointment);
+        const appointment = await this.appointmentsRepository.create({
+            provider_id: findUser.id,
+            date });
 
         return appointment;
     }

@@ -1,15 +1,9 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
-
-@Entity('appointments')
 class Appointment {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
-
-    @Column({ type: 'text'})
-    provider: string;
-
-    @Column('timestamp with time zone')
-    date: Date;
+    id?: string
+    date: Date | string
+    provider_id: string
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
 }
 
 export default Appointment;
