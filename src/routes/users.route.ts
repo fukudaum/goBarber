@@ -3,7 +3,7 @@ import User from "../entities/User";
 import { PrismaUserRepository } from "../repositories/prisma/prismaUsers.repository";
 import CreateUserService from "../service/CreateUser.service";
 
-interface CreatedUser {
+export interface CreatedUser {
     id: string | undefined
     name: string
     email: string
