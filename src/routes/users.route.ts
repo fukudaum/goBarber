@@ -1,6 +1,15 @@
 import { Request, Response, Router } from "express";
+import User from "../entities/User";
 import { PrismaUserRepository } from "../repositories/prisma/prismaUsers.repository";
 import CreateUserService from "../service/CreateUser.service";
+
+interface CreatedUser {
+    id: string | undefined
+    name: string
+    email: string
+    createdAt?: Date | string | null
+    updatedAt?: Date | string | null
+}
 
 const usersRouter = Router();
 const usersRepository = new PrismaUserRepository()
@@ -16,18 +25,33 @@ usersRouter.post('/', async(request: Request, response: Response) => {
 
     const createUserService = new CreateUserService(usersRepository);
     try {
-        const User = await createUserService.execute({
+        const user = await createUserService.execute({
             name,
             password,
             email
         });
 
-        return response.json(User);
+        if(!user) {
+            throw new Error('Error creating user');
+        }
+
+        const transformedUser = transformUser(user);
+        return response.json(transformedUser);
     } catch (error) {
         return response.status(400).json({
             error
         });
     }
 });
+
+function transformUser(user: User): CreatedUser {
+    return {
+        name: user.name,
+        email: user.email,
+        id: user.id,
+        createdAt: user.createdAt,
+        updatedAt: user.updatedAt
+    }
+}
 
 export default usersRouter;

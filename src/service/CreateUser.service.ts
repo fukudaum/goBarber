@@ -1,6 +1,6 @@
-import { startOfHour } from "date-fns";
 import User from "../entities/User";
 import { UsersRepository } from "../repositories/users.repository";
+import { hash } from "bcryptjs";
 
 interface Request {
     name: string;
@@ -18,9 +18,11 @@ class CreateUserService {
             throw Error('This email is already registered!');
         }
 
-        const User = await this.usersRepository.create({  name, password, email });
+        const hashedPassword = await hash(password, 8)
 
-        return User;
+        const user = await this.usersRepository.create({  name, password: hashedPassword, email });
+
+        return user;
     }
 }
 

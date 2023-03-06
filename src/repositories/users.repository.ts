@@ -1,6 +1,4 @@
 import User from "../entities/User";
-import { CreateUserDto } from "./prisma/prismaUsers.repository";
-
 
 export interface UsersRepository {
     find(): Promise<User[]>;

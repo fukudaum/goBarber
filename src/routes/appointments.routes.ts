@@ -1,7 +1,6 @@
 import { Request, Response, Router } from "express";
 import { parseISO } from "date-fns";
 import CreateAppointmentService from "../service/CreateAppointment.service";
-import Appointment from "../entities/Appointment";
 import { PrismaAppointmentRepository } from "../repositories/prisma/prismaAppointments.repository";
 import { PrismaUserRepository } from "../repositories/prisma/prismaUsers.repository";
 
