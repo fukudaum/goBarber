@@ -13,11 +13,11 @@ sessionsRouter.post('/', async(request: Request, response: Response) => {
 
         const authenticateUserService = new AutheticateUserService(usersRepository);
 
-        const { user } = await authenticateUserService.execute({ password, email });
+        const { user, token } = await authenticateUserService.execute({ password, email });
 
         const transformedUser = transformUser(user);
 
-        return response.json({ user: transformedUser });
+        return response.json({ user: transformedUser, token });
     } catch (error) {
         return response.status(404).json({ error });
     }

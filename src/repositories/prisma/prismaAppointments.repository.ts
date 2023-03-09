@@ -20,7 +20,9 @@ export class PrismaAppointmentRepository implements AppointmentsRepository {
     }
 
     async create(data: any): Promise<Appointment> {
-        return await prismaClient.appointment.create(data);
+        return await prismaClient.appointment.create({
+            data
+        });
     }
 
     async delete(): Promise<Appointment> {

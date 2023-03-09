@@ -14,6 +14,7 @@ class CreateAppointmentService {
 
     public async execute({ provider, date }: Request): Promise<Appointment> {
         const appointmentDate = startOfHour(date);
+
         const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(appointmentDate);
 
         const findUser = await this.usersRepository.findByEmail(provider);
@@ -21,11 +22,9 @@ class CreateAppointmentService {
         if(!findUser) {
             throw Error('Provider not found!');
         }
-
         if(findAppointmentInSameDate) {
             throw Error('This appointment is already booked!');
         }
-
         const appointment = await this.appointmentsRepository.create({
             provider_id: findUser.id,
             date });

@@ -1,6 +1,8 @@
 import { UsersRepository } from "../repositories/users.repository";
 import { compare } from "bcryptjs";
 import User from "../entities/User";
+import { sign } from "jsonwebtoken";
+import auth from "../config/auth";
 
 interface Request {
     email: string
@@ -9,6 +11,7 @@ interface Request {
 
 interface Response {
     user: User
+    token: string
 }
 
 class AutheticateUserService {
@@ -27,9 +30,20 @@ class AutheticateUserService {
             throw new Error('Incorrect email/password combination.');
         }
 
-        return {
-            user: findUser
+        const secret = process.env.SECRET;
+
+        if(secret) {
+            const token = sign({  }, secret, {
+                subject: findUser.id,
+                expiresIn: process.env.EXPIRESIN,
+            });
+
+            return {
+                user: findUser,
+                token
+            }
         }
+        throw new Error('Incorrect email/password combination.');
     }
 }
 
