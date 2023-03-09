@@ -28,7 +28,6 @@ appointmentsRouter.post('/', async(request: Request, response: Response) => {
             provider,
             date: parsedDate
         });
-
         return response.json(appointment);
     } catch (error) {
         return response.status(400).json({

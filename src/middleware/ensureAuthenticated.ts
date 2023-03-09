@@ -9,6 +9,16 @@ interface TokenPayload {
     sub: string;
 }
 
+declare global {
+    namespace Express {
+        interface Request {
+        user?: {
+            id: string
+        }
+        }
+    }
+}
+
 export default function ensureAuthenticated(request: Request, response: Response, next: NextFunction): void {
     const authHeader = request.headers.authorization;
     if(!authHeader) {
