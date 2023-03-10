@@ -2,6 +2,10 @@ import { Request, Response, Router } from "express";
 import User from "../entities/User";
 import { PrismaUserRepository } from "../repositories/prisma/prismaUsers.repository";
 import CreateUserService from "../service/CreateUser.service";
+import ensureAuthenticated from "../middleware/ensureAuthenticated";
+import multer from 'multer';
+import uploadConfig from '../config/upload';
+import UpdateUserAvatarService from "../service/UpdateUserAvatar.service";
 
 export interface CreatedUser {
     id: string | undefined
@@ -12,6 +16,8 @@ export interface CreatedUser {
 }
 
 const usersRouter = Router();
+const upload = multer(uploadConfig);
+
 const usersRepository = new PrismaUserRepository()
 
 usersRouter.get('/', async(request: Request, response: Response) => {
@@ -43,6 +49,23 @@ usersRouter.post('/', async(request: Request, response: Response) => {
         });
     }
 });
+
+usersRouter.patch('/avatar', ensureAuthenticated, upload.single('avatar'), async(request: Request, response: Response) => {
+    try {
+        const updateUserAvatar = new UpdateUserAvatarService(usersRepository);
+
+        if(request.user?.id)  {
+            await updateUserAvatar.execute({
+                user_id: request.user?.id,
+                avatarFileName: request.file?.filename,
+            })
+        }
+
+    } catch (error) {
+
+    }
+    return response.json({ ok: true });
+})
 
 function transformUser(user: User): CreatedUser {
     return {

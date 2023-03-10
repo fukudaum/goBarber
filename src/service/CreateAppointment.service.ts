@@ -22,9 +22,11 @@ class CreateAppointmentService {
         if(!findUser) {
             throw Error('Provider not found!');
         }
+
         if(findAppointmentInSameDate) {
             throw Error('This appointment is already booked!');
         }
+
         const appointment = await this.appointmentsRepository.create({
             provider_id: findUser.id,
             date });

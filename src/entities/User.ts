@@ -5,6 +5,7 @@ class User {
     email: string
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
+    avatar?: string
 }
 
 export default User;

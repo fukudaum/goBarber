@@ -20,8 +20,12 @@ export class PrismaUserRepository implements UsersRepository {
         return await prismaClient.user.findMany();
     }
 
-    async findUnique(): Promise<User> {
-        throw new Error("Method not implemented.");
+    async findUnique(userId: string): Promise<User | null> {
+        return await prismaClient.user.findUnique({
+            where: {
+                id: userId
+            }
+        });
     }
 
     async create({name,
