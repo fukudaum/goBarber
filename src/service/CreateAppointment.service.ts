@@ -1,5 +1,6 @@
 import { startOfHour } from "date-fns";
 import Appointment from "../entities/Appointment";
+import AppError from "../errors/AppErrors";
 import { AppointmentsRepository } from "../repositories/appointments.repository";
 import { UsersRepository } from "../repositories/users.repository";
 
@@ -20,11 +21,11 @@ class CreateAppointmentService {
         const findUser = await this.usersRepository.findByEmail(provider);
 
         if(!findUser) {
-            throw Error('Provider not found!');
+            throw new AppError('Provider not found!');
         }
 
         if(findAppointmentInSameDate) {
-            throw Error('This appointment is already booked!');
+            throw new AppError('This appointment is already booked!');
         }
 
         const appointment = await this.appointmentsRepository.create({

@@ -1,6 +1,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
+import AppError from "../errors/AppErrors";
 require('dotenv').config();
 
 interface TokenPayload {
@@ -22,7 +23,7 @@ declare global {
 export default function ensureAuthenticated(request: Request, response: Response, next: NextFunction): void {
     const authHeader = request.headers.authorization;
     if(!authHeader) {
-        throw new Error('JWT token is missing!');
+        throw new AppError('JWT token is missing!', 401);
     }
 
     const [, token] = authHeader.split(' ');
@@ -40,9 +41,9 @@ export default function ensureAuthenticated(request: Request, response: Response
 
             return next();
         }
-        throw new Error('Invalid JWT token');
+        throw new AppError('Invalid JWT token', 401);
     } catch (error) {
-        throw new Error('Invalid JWT token');
+        throw new AppError('Invalid JWT token', 401);
     }
 }
 

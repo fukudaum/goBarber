@@ -2,6 +2,7 @@ import { UsersRepository } from "../repositories/users.repository";
 import { compare } from "bcryptjs";
 import User from "../entities/User";
 import { sign } from "jsonwebtoken";
+import AppError from "../errors/AppErrors";
 
 interface Request {
     email: string
@@ -20,13 +21,13 @@ class AutheticateUserService {
         const findUser = await this.usersRepository.findByEmail(email);
 
         if(!findUser) {
-            throw new Error('Incorrect email/password combination.');
+            throw new AppError('Incorrect email/password combination.', 401);
         }
 
         const passwordMatched = await compare(password, findUser.password);
 
         if(!passwordMatched) {
-            throw new Error('Incorrect email/password combination.');
+            throw new AppError('Incorrect email/password combination.', 401);
         }
 
         const secret = process.env.SECRET;
@@ -42,7 +43,7 @@ class AutheticateUserService {
                 token
             }
         }
-        throw new Error('Incorrect email/password combination.');
+        throw new AppError('Incorrect email/password combination.', 401);
     }
 }
 

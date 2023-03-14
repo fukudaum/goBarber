@@ -48,7 +48,14 @@ export class PrismaUserRepository implements UsersRepository {
         throw new Error("Method not implemented.");
     }
 
-    async update(): Promise<User> {
-        throw new Error("Method not implemented.");
+    async updateAvatar(avatar: string, userId: string): Promise<User> {
+        return await prismaClient.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                avatar: avatar
+            }
+        })
     }
 }

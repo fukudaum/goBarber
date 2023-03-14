@@ -1,6 +1,7 @@
 import User from "../entities/User";
 import { UsersRepository } from "../repositories/users.repository";
 import { hash } from "bcryptjs";
+import AppError from "../errors/AppErrors";
 
 interface Request {
     name: string;
@@ -15,7 +16,7 @@ class CreateUserService {
         const findUser = await this.usersRepository.findByEmail(email);
 
         if(findUser) {
-            throw Error('This email is already registered!');
+            throw new AppError('This email is already registered!');
         }
 
         const hashedPassword = await hash(password, 8)

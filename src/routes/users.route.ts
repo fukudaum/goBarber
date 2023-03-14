@@ -30,41 +30,32 @@ usersRouter.post('/', async(request: Request, response: Response) => {
     const {  name, password, email } = request.body;
 
     const createUserService = new CreateUserService(usersRepository);
-    try {
-        const user = await createUserService.execute({
-            name,
-            password,
-            email
-        });
 
-        if(!user) {
-            throw new Error('Error creating user');
-        }
+    const user = await createUserService.execute({
+        name,
+        password,
+        email
+    });
 
-        const transformedUser = transformUser(user);
-        return response.json(transformedUser);
-    } catch (error) {
-        return response.status(400).json({
-            error
-        });
+    if(!user) {
+        throw new Error('Error creating user');
     }
+
+    const transformedUser = transformUser(user);
+    return response.json(transformedUser);
 });
 
 usersRouter.patch('/avatar', ensureAuthenticated, upload.single('avatar'), async(request: Request, response: Response) => {
-    try {
-        const updateUserAvatar = new UpdateUserAvatarService(usersRepository);
+    const updateUserAvatar = new UpdateUserAvatarService(usersRepository);
 
-        if(request.user?.id)  {
-            await updateUserAvatar.execute({
-                user_id: request.user?.id,
-                avatarFileName: request.file?.filename,
-            })
-        }
+    if(request.user?.id)  {
+        const user = await updateUserAvatar.execute({
+            user_id: request.user?.id,
+            avatarFileName: request.file?.filename,
+        });
 
-    } catch (error) {
-
+        return response.json(user);
     }
-    return response.json({ ok: true });
 })
 
 function transformUser(user: User): CreatedUser {

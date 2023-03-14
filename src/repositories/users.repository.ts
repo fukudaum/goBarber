@@ -6,6 +6,6 @@ export interface UsersRepository {
     findByEmail(email: string): Promise<User | null>;
     create(data: any): Promise<User | undefined>;
     delete(): Promise<User>;
-    update(): Promise<User>;
+    updateAvatar(avatar: string, userId: string): Promise<User>;
 }
 

@@ -8,19 +8,15 @@ const sessionsRouter = Router();
 const usersRepository = new PrismaUserRepository()
 
 sessionsRouter.post('/', async(request: Request, response: Response) => {
-    try {
-        const { password, email } = request.body;
+    const { password, email } = request.body;
 
-        const authenticateUserService = new AutheticateUserService(usersRepository);
+    const authenticateUserService = new AutheticateUserService(usersRepository);
 
-        const { user, token } = await authenticateUserService.execute({ password, email });
+    const { user, token } = await authenticateUserService.execute({ password, email });
 
-        const transformedUser = transformUser(user);
+    const transformedUser = transformUser(user);
 
-        return response.json({ user: transformedUser, token });
-    } catch (error) {
-        return response.status(404).json({ error });
-    }
+    return response.json({ user: transformedUser, token });
 });
 
 function transformUser(user: User): CreatedUser {
