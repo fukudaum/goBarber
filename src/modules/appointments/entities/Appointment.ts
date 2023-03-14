@@ -1,4 +1,4 @@
-class Appointment {
+interface Appointment {
     id?: string
     date: Date | string
     provider_id: string

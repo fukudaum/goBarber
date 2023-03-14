@@ -1,7 +1,7 @@
-import User from "../entities/User";
-import { UsersRepository } from "../repositories/users.repository";
+import User from "@modules/users/entities/User";
+import { UsersRepository } from "@modules/users/repositories/users.repository";
 import { hash } from "bcryptjs";
-import AppError from "../../../shared/errors/AppErrors";
+import AppError from "@shared/errors/AppErrors";
 
 
 interface Request {

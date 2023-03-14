@@ -1,8 +1,8 @@
 import { startOfHour } from "date-fns";
-import Appointment from "../entities/Appointment";
-import AppError from "../../../shared/errors/AppErrors";
-import { AppointmentsRepository } from "../repositories/appointments.repository";
-import { UsersRepository } from "../../users/repositories/users.repository";
+import Appointment from "@modules/appointments/entities/Appointment";
+import AppError from "@shared/errors/AppErrors";
+import { AppointmentsRepository } from "@modules/appointments/repositories/appointments.repository";
+import { UsersRepository } from "@modules/users/repositories/users.repository";
 
 interface Request {
     provider: string,

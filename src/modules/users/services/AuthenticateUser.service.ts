@@ -1,8 +1,8 @@
-import { UsersRepository } from "../repositories/users.repository";
+import { UsersRepository } from "@modules/users/repositories/users.repository";
 import { compare } from "bcryptjs";
-import User from "../entities/User";
+import User from "@modules/users/entities/User";
 import { sign } from "jsonwebtoken";
-import AppError from "../../../shared/errors/AppErrors";
+import AppError from "@shared/errors/AppErrors";
 
 interface Request {
     email: string

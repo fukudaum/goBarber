@@ -1,7 +1,7 @@
 import { Request, Response, Router } from "express";
-import User from "../../modules/users/entities/User";
-import { PrismaUserRepository } from "../../modules/users/repositories/prisma/prismaUsers.repository";
-import AutheticateUserService from "../../modules/users/services/AuthenticateUser.service";
+import User from "@modules/users/entities/User";
+import { PrismaUserRepository } from "@modules/users/repositories/prisma/prismaUsers.repository";
+import AutheticateUserService from "@modules/users/services/AuthenticateUser.service";
 import { CreatedUser } from "./users.route";
 
 const sessionsRouter = Router();

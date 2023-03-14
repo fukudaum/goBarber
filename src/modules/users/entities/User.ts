@@ -1,4 +1,4 @@
-class User {
+interface User {
     id?: string
     name: string
     password: string

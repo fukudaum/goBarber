@@ -1,7 +1,7 @@
 
 import { Request, Response, NextFunction } from "express";
 import { verify } from "jsonwebtoken";
-import AppError from "../errors/AppErrors";
+import AppError from "@shared/errors/AppErrors";
 require('dotenv').config();
 
 interface TokenPayload {

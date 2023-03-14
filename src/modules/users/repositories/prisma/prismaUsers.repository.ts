@@ -1,14 +1,15 @@
-import User from "../../entities/User";
-import { prismaClient } from "../../../../shared/database/prisma.service";
-import { UsersRepository } from "../users.repository";
+import User from "@modules/users/entities/User";
+import { prismaClient } from "@shared/infra/database/prisma.service";
+import { UsersRepository } from "@modules/users/repositories/users.repository";
 
-export class CreateUserDto {
+export interface CreateUserDto {
     name: string
     password: string
     email: string
-  }
+}
+
 export class PrismaUserRepository implements UsersRepository {
-    async findByEmail(email: string): Promise<User | null> {
+    async findByEmail(email: string): Promise<any | null> {
         return await prismaClient.user.findUnique({
             where: {
                 email: email
@@ -16,11 +17,11 @@ export class PrismaUserRepository implements UsersRepository {
         })
     }
 
-    async find(): Promise<User[]> {
+    async find(): Promise<any[]> {
         return await prismaClient.user.findMany();
     }
 
-    async findUnique(userId: string): Promise<User | null> {
+    async findUnique(userId: string): Promise<any | null> {
         return await prismaClient.user.findUnique({
             where: {
                 id: userId
@@ -30,7 +31,7 @@ export class PrismaUserRepository implements UsersRepository {
 
     async create({name,
         password,
-        email} : CreateUserDto): Promise<User | undefined> {
+        email} : CreateUserDto): Promise<any | undefined> {
         try {
             return await prismaClient.user.create({
                 data: {
@@ -48,7 +49,7 @@ export class PrismaUserRepository implements UsersRepository {
         throw new Error("Method not implemented.");
     }
 
-    async updateAvatar(avatar: string, userId: string): Promise<User> {
+    async updateAvatar(avatar: string, userId: string): Promise<any> {
         return await prismaClient.user.update({
             where: {
                 id: userId

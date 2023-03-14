@@ -1,11 +1,11 @@
 import { Request, Response, Router } from "express";
-import User from "../../modules/users/entities/User";
-import { PrismaUserRepository } from "../../modules/users/repositories/prisma/prismaUsers.repository";
-import ensureAuthenticated from "../middleware/ensureAuthenticated";
+import User from "@modules/users/entities/User";
+import { PrismaUserRepository } from "@modules/users/repositories/prisma/prismaUsers.repository";
+import ensureAuthenticated from "@shared/infra/http/middleware/ensureAuthenticated";
 import multer from 'multer';
-import uploadConfig from '../../config/upload';
-import CreateUserService from "../../modules/users/services/CreateUser.service";
-import UpdateUserAvatarService from "../../modules/users/services/UpdateUserAvatar.service";
+import uploadConfig from '@config/upload';
+import CreateUserService from "@modules/users/services/CreateUser.service";
+import UpdateUserAvatarService from "@modules/users/services/UpdateUserAvatar.service";
 
 export interface CreatedUser {
     id: string | undefined
