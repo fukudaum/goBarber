@@ -1,8 +1,8 @@
 import { Request, Response, Router } from "express";
 import { parseISO } from "date-fns";
-import CreateAppointmentService from "../service/CreateAppointment.service";
-import { PrismaAppointmentRepository } from "../repositories/prisma/prismaAppointments.repository";
-import { PrismaUserRepository } from "../repositories/prisma/prismaUsers.repository";
+import CreateAppointmentService from "../../modules/appointments/services/CreateAppointment.service";
+import { PrismaAppointmentRepository } from "../../modules/appointments/repositories/prisma/prismaAppointments.repository";
+import { PrismaUserRepository } from "../../modules/users/repositories/prisma/prismaUsers.repository";
 import ensureAuthenticated from "../middleware/ensureAuthenticated";
 
 const appointmentsRouter = Router();

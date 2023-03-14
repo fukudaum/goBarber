@@ -1,7 +1,8 @@
 import User from "../entities/User";
 import { UsersRepository } from "../repositories/users.repository";
 import { hash } from "bcryptjs";
-import AppError from "../errors/AppErrors";
+import AppError from "../../../shared/errors/AppErrors";
+
 
 interface Request {
     name: string;

@@ -1,5 +1,5 @@
 import User from "../../entities/User";
-import { prismaClient } from "../../database/prisma.service";
+import { prismaClient } from "../../../../shared/database/prisma.service";
 import { UsersRepository } from "../users.repository";
 
 export class CreateUserDto {

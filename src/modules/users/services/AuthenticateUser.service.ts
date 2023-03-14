@@ -2,7 +2,7 @@ import { UsersRepository } from "../repositories/users.repository";
 import { compare } from "bcryptjs";
 import User from "../entities/User";
 import { sign } from "jsonwebtoken";
-import AppError from "../errors/AppErrors";
+import AppError from "../../../shared/errors/AppErrors";
 
 interface Request {
     email: string

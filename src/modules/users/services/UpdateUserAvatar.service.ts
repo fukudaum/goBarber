@@ -2,9 +2,9 @@ import { UsersRepository } from "../repositories/users.repository";
 import path from 'path';
 import fs from 'fs';
 
-import uploadConfig from '../config/upload';
 import User from "../entities/User";
-import AppError from "../errors/AppErrors";
+import AppError from "../../../shared/errors/AppErrors";
+import uploadConfig from "../../../config/upload";
 
 interface Request {
     user_id: string;
