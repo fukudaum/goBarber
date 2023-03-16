@@ -1,12 +1,8 @@
 import { Request, Response, Router } from "express";
-import User from "@modules/users/entities/User";
 import { PrismaUserRepository } from "@modules/users/repositories/prisma/prismaUsers.repository";
 import ensureAuthenticated from "@shared/infra/http/middleware/ensureAuthenticated";
-import multer from 'multer';
-import uploadConfig from '@config/upload';
-import CreateUserService from "@modules/users/services/CreateUser.service";
-import UpdateUserAvatarService from "@modules/users/services/UpdateUserAvatar.service";
-import { container } from 'tsyringe';
+import UsersController from "../controllers/Users.controller";
+import UserAvatarController from "../controllers/UserAvatar.controller";
 
 export interface CreatedUser {
     id: string | undefined
@@ -17,9 +13,10 @@ export interface CreatedUser {
 }
 
 const usersRouter = Router();
-const upload = multer(uploadConfig);
 
-const usersRepository = new PrismaUserRepository()
+const usersRepository = new PrismaUserRepository();
+const usersController = new UsersController();
+const userAvatarController = new UserAvatarController();
 
 usersRouter.get('/', async(request: Request, response: Response) => {
     const Users = await usersRepository.find();
@@ -27,46 +24,8 @@ usersRouter.get('/', async(request: Request, response: Response) => {
     return response.json(Users);
 });
 
-usersRouter.post('/', async(request: Request, response: Response) => {
-    const {  name, password, email } = request.body;
+usersRouter.post('/', usersController.create);
 
-    const createUserService = container.resolve(CreateUserService);
-
-    const user = await createUserService.execute({
-        name,
-        password,
-        email
-    });
-
-    if(!user) {
-        throw new Error('Error creating user');
-    }
-
-    const transformedUser = transformUser(user);
-    return response.json(transformedUser);
-});
-
-usersRouter.patch('/avatar', ensureAuthenticated, upload.single('avatar'), async(request: Request, response: Response) => {
-    const updateUserAvatar = container.resolve(UpdateUserAvatarService);
-
-    if(request.user?.id)  {
-        const user = await updateUserAvatar.execute({
-            user_id: request.user?.id,
-            avatarFileName: request.file?.filename,
-        });
-
-        return response.json(user);
-    }
-})
-
-function transformUser(user: User): CreatedUser {
-    return {
-        name: user.name,
-        email: user.email,
-        id: user.id,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt
-    }
-}
+usersRouter.patch('/avatar', ensureAuthenticated, userAvatarController.update);
 
 export default usersRouter;
