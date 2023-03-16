@@ -4,6 +4,7 @@ import CreateAppointmentService from "@modules/appointments/services/CreateAppoi
 import { PrismaAppointmentRepository } from "@modules/appointments/repositories/prisma/prismaAppointments.repository";
 import { PrismaUserRepository } from "@modules/users/repositories/prisma/prismaUsers.repository";
 import ensureAuthenticated from "@shared/infra/http/middleware/ensureAuthenticated";
+import { container } from 'tsyringe';
 
 const appointmentsRouter = Router();
 const appointmentsRepository = new PrismaAppointmentRepository();
@@ -22,7 +23,7 @@ appointmentsRouter.post('/', async(request: Request, response: Response) => {
 
     const parsedDate = parseISO(date);
 
-    const createAppointmentService = new CreateAppointmentService(appointmentsRepository, usersRepository);
+    const createAppointmentService = container.resolve(CreateAppointmentService);
 
     const appointment = await createAppointmentService.execute({
         provider,

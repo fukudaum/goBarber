@@ -3,6 +3,7 @@ import User from "@modules/users/entities/User";
 import { PrismaUserRepository } from "@modules/users/repositories/prisma/prismaUsers.repository";
 import AutheticateUserService from "@modules/users/services/AuthenticateUser.service";
 import { CreatedUser } from "./users.route";
+import { container } from 'tsyringe';
 
 const sessionsRouter = Router();
 const usersRepository = new PrismaUserRepository()
@@ -10,7 +11,7 @@ const usersRepository = new PrismaUserRepository()
 sessionsRouter.post('/', async(request: Request, response: Response) => {
     const { password, email } = request.body;
 
-    const authenticateUserService = new AutheticateUserService(usersRepository);
+    const authenticateUserService = container.resolve(AutheticateUserService);
 
     const { user, token } = await authenticateUserService.execute({ password, email });
 

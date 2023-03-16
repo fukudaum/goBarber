@@ -2,7 +2,7 @@ import User from "@modules/users/entities/User";
 import { UsersRepository } from "@modules/users/repositories/users.repository";
 import { hash } from "bcryptjs";
 import AppError from "@shared/errors/AppErrors";
-
+import { injectable, inject } from 'tsyringe';
 
 interface Request {
     name: string;
@@ -10,8 +10,12 @@ interface Request {
     email: string;
 }
 
+@injectable()
 class CreateUserService {
-    constructor(private usersRepository: UsersRepository) {}
+    constructor(
+        @inject('UsersRepository')
+        private usersRepository: UsersRepository
+    ) {}
 
     public async execute({ name, password, email }: Request): Promise<User | undefined> {
         const findUser = await this.usersRepository.findByEmail(email);

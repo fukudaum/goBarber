@@ -3,6 +3,7 @@ import { compare } from "bcryptjs";
 import User from "@modules/users/entities/User";
 import { sign } from "jsonwebtoken";
 import AppError from "@shared/errors/AppErrors";
+import { injectable, inject } from 'tsyringe';
 
 interface Request {
     email: string
@@ -14,8 +15,12 @@ interface Response {
     token: string
 }
 
+@injectable()
 class AutheticateUserService {
-    constructor(private usersRepository: UsersRepository) {}
+    constructor(
+        @inject('UsersRepository')
+        private usersRepository: UsersRepository
+    ) {}
 
     public async execute({ email, password }: Request): Promise<Response> {
         const findUser = await this.usersRepository.findByEmail(email);

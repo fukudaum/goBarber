@@ -3,14 +3,20 @@ import Appointment from "@modules/appointments/entities/Appointment";
 import AppError from "@shared/errors/AppErrors";
 import { AppointmentsRepository } from "@modules/appointments/repositories/appointments.repository";
 import { UsersRepository } from "@modules/users/repositories/users.repository";
+import { injectable, inject } from 'tsyringe';
+
 
 interface Request {
     provider: string,
     date: Date
 }
 
+@injectable()
 class CreateAppointmentService {
-    constructor(private appointmentsRepository: AppointmentsRepository,
+    constructor(
+        @inject('AppointmentsRepository')
+        private appointmentsRepository: AppointmentsRepository,
+        @inject('UsersRepository')
         private usersRepository: UsersRepository) {}
 
     public async execute({ provider, date }: Request): Promise<Appointment> {
