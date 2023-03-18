@@ -2,10 +2,9 @@ import { UsersRepository } from "../repositories/users.repository";
 import path from 'path';
 import fs from 'fs';
 
-import User from "@modules/users/entities/User";
-import AppError from "@shared/errors/AppErrors";
-import uploadConfig from "@config/upload";
 import { injectable, inject } from 'tsyringe';
+import User from "../entities/User";
+import AppError from "shared/errors/AppErrors";
 
 interface Request {
     user_id: string;

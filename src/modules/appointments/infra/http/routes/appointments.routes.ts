@@ -1,6 +1,6 @@
 import { Request, Response, Router } from "express";
-import { PrismaAppointmentRepository } from "@modules/appointments/repositories/prisma/prismaAppointments.repository";
-import ensureAuthenticated from "@shared/infra/http/middleware/ensureAuthenticated";
+import { PrismaAppointmentRepository } from "modules/appointments/repositories/prisma/prismaAppointments.repository";
+import ensureAuthenticated from "shared/infra/http/middleware/ensureAuthenticated";
 import AppointmentsController from "../controllers/Appointments.controller";
 
 const appointmentsRouter = Router();

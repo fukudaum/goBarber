@@ -1,8 +1,8 @@
-import User from "@modules/users/entities/User";
 import { Request, Response } from "express";
 import { CreatedUser } from "../routes/users.route";
 import { container } from 'tsyringe';
-import CreateUserService from "@modules/users/services/CreateUser.service";
+import User from "modules/users/entities/User";
+import CreateUserService from "modules/users/services/CreateUser.service";
 
 export default class UsersController {
     public async create(request: Request, response: Response): Promise<Response> {

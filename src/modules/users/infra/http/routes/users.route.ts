@@ -1,8 +1,8 @@
 import { Request, Response, Router } from "express";
-import { PrismaUserRepository } from "@modules/users/repositories/prisma/prismaUsers.repository";
-import ensureAuthenticated from "@shared/infra/http/middleware/ensureAuthenticated";
 import UsersController from "../controllers/Users.controller";
 import UserAvatarController from "../controllers/UserAvatar.controller";
+import { PrismaUserRepository } from "modules/users/repositories/prisma/prismaUsers.repository";
+import ensureAuthenticated from "shared/infra/http/middleware/ensureAuthenticated";
 
 export interface CreatedUser {
     id: string | undefined

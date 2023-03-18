@@ -4,17 +4,23 @@
       "module": "commonjs",
       "rootDir": "",
       "baseUrl": "./src",
-      "paths": {
-        "@modules/*": ["modules/*"],
-        "@config/*": ["config/*"],
-        "@shared/*": ["shared/*"]
-      },
+    //   "paths": {
+    //     "@modules/*": ["modules/*"],
+    //     "@config/*": ["config/*"],
+    //     "@shared/*": ["shared/*"]
+    //   },
       "outDir": "./dist",
       "esModuleInterop": true,
       "forceConsistentCasingInFileNames": true,
       "strict": true,
       "experimentalDecorators": true,
-      "skipLibCheck": true
+      "skipLibCheck": true,
+      "typeRoots": [
+        "./src/@types",
+        "./custom_typings",
+        "./@types",
+        "./node_modules/@types"
+      ]
     }
 }
 

@@ -1,4 +1,4 @@
-import User from "@modules/users/entities/User";
+import User from "../entities/User";
 
 export interface UsersRepository {
     find(): Promise<User[]>;

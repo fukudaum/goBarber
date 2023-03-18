@@ -1,6 +1,6 @@
-import User from "@modules/users/entities/User";
-import AutheticateUserService from "@modules/users/services/AuthenticateUser.service";
 import { Request, Response } from "express";
+import User from "modules/users/entities/User";
+import AutheticateUserService from "modules/users/services/AuthenticateUser.service";
 import { container } from 'tsyringe';
 import { CreatedUser } from "../routes/users.route";
 

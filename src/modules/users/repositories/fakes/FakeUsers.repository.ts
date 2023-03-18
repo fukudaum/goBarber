@@ -1,6 +1,6 @@
-import User from "@modules/users/entities/User";
-import { UsersRepository } from "@modules/users/repositories/users.repository";
+import User from 'modules/users/entities/User';
 import { uuid } from 'uuidv4';
+import { UsersRepository } from '../users.repository';
 
 export interface CreateUserDto {
     name: string
@@ -12,6 +12,7 @@ export class FakeUsersRepository implements UsersRepository {
     private users: User[] = [];
 
     async findByEmail(email: string): Promise<User | null> {
+        console.log(email)
         const findUser = this.users.find((user) => {
             return user.email === email
         });
@@ -52,7 +53,6 @@ export class FakeUsersRepository implements UsersRepository {
             };
 
             this.users.push(user);
-
             return user;
     }
 

@@ -1,6 +1,6 @@
-import User from "@modules/users/entities/User";
-import { prismaClient } from "@shared/infra/database/prisma.service";
-import { UsersRepository } from "@modules/users/repositories/users.repository";
+import User from "modules/users/entities/User";
+import { prismaClient } from "shared/infra/database/prisma.service";
+import { UsersRepository } from "../users.repository";
 
 export interface CreateUserDto {
     name: string

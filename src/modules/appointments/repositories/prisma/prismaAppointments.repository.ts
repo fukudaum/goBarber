@@ -1,5 +1,5 @@
+import { prismaClient } from "shared/infra/database/prisma.service";
 import Appointment from "../../entities/Appointment";
-import { prismaClient } from "@shared/infra/database/prisma.service";
 import { AppointmentsRepository } from "../appointments.repository";
 
 export class PrismaAppointmentRepository implements AppointmentsRepository {

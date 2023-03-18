@@ -1,4 +1,5 @@
-import { FakeUsersRepository } from "@modules/users/repositories/fakes/FakeUsers.repository";
+import "reflect-metadata";
+import { FakeUsersRepository } from  "../../users/repositories/fakes/FakeUsers.repository";
 import { FakeAppointmentRepository } from "../repositories/fakes/FakeAppointment.repository";
 import CreateAppointmentService from "./CreateAppointment.service";
 
@@ -17,7 +18,7 @@ describe('CreateAppointment', () => {
         if(provider?.id) {
             const appointment = await createAppointmentService.execute({
                 date: new Date(),
-                provider: provider.id,
+                provider: provider.email,
             });
 
             expect(appointment).toHaveProperty('id');
