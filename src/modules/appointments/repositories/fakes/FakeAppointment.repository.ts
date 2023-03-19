@@ -20,8 +20,9 @@ export class FakeAppointmentRepository implements AppointmentsRepository {
 
     async findByDate(date: Date): Promise<Appointment | null> {
         const findAppointment = this.appointments.find((appointment) => {
-            return appointment.date === date
+            return appointment.date == date
         });
+        console.log('findbydate', date, this.appointments, findAppointment)
 
         if(!findAppointment) {
             return null;
@@ -40,7 +41,7 @@ export class FakeAppointmentRepository implements AppointmentsRepository {
         };
 
         this.appointments.push(appointment);
-
+        console.log('create', this.appointments);
         return appointment;
     }
 

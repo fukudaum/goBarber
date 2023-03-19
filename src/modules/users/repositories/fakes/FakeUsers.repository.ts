@@ -12,7 +12,6 @@ export class FakeUsersRepository implements UsersRepository {
     private users: User[] = [];
 
     async findByEmail(email: string): Promise<User | null> {
-        console.log(email)
         const findUser = this.users.find((user) => {
             return user.email === email
         });

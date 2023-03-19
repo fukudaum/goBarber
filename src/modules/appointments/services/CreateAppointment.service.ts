@@ -21,11 +21,8 @@ class CreateAppointmentService {
 
     public async execute({ provider, date }: Request): Promise<Appointment> {
         const appointmentDate = startOfHour(date);
-
         const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(appointmentDate);
-
         const findUser = await this.usersRepository.findByEmail(provider);
-
         if(!findUser) {
             throw new AppError('Provider not found!');
         }
@@ -36,7 +33,7 @@ class CreateAppointmentService {
 
         const appointment = await this.appointmentsRepository.create({
             provider_id: findUser.id,
-            date });
+            date: appointmentDate });
 
         return appointment;
     }
