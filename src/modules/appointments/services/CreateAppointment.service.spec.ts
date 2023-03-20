@@ -26,6 +26,18 @@ describe('CreateAppointment', () => {
         }
     });
 
+    it('should not be able to create a new appointment because provider doesnt exists', async () => {
+        const fakeAppointmentsRepository = new FakeAppointmentRepository();
+        const fakeUsersRepository = new FakeUsersRepository();
+        const createAppointmentService = new CreateAppointmentService(fakeAppointmentsRepository, fakeUsersRepository);
+
+        expect(createAppointmentService.execute({
+            date: new Date(),
+            provider: 'provider_teste@gmail.com',
+        })).rejects.toBeInstanceOf(AppError);;
+
+    });
+
     it('should not be able to create a new appointment on the same time', async () => {
         const fakeAppointmentsRepository = new FakeAppointmentRepository();
         const fakeUsersRepository = new FakeUsersRepository();

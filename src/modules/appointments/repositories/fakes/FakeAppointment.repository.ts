@@ -1,6 +1,7 @@
 import Appointment from "../../entities/Appointment";
 import { AppointmentsRepository } from "../appointments.repository";
 import { uuid } from 'uuidv4';
+import { isEqual } from 'date-fns';
 
 export interface CreateParams {
     date: Date,
@@ -20,7 +21,7 @@ export class FakeAppointmentRepository implements AppointmentsRepository {
 
     async findByDate(date: Date): Promise<Appointment | null> {
         const appointmentIndex = this.appointments.findIndex((item) => {
-            return  new Date(item.date).getTime() === new Date(date).getTime()
+            return  isEqual(new Date(item.date), date);
         });
 
         if(appointmentIndex < 0) {
@@ -40,7 +41,6 @@ export class FakeAppointmentRepository implements AppointmentsRepository {
         };
 
         this.appointments.push(appointment);
-        console.log('create', this.appointments);
         return appointment;
     }
 

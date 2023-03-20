@@ -23,6 +23,7 @@ class CreateAppointmentService {
         const appointmentDate = startOfHour(date);
         const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(appointmentDate);
         const findUser = await this.usersRepository.findByEmail(provider);
+
         if(!findUser) {
             throw new AppError('Provider not found!');
         }
