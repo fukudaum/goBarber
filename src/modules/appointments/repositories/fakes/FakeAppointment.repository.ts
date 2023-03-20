@@ -19,16 +19,15 @@ export class FakeAppointmentRepository implements AppointmentsRepository {
     }
 
     async findByDate(date: Date): Promise<Appointment | null> {
-        const findAppointment = this.appointments.find((appointment) => {
-            return appointment.date == date
+        const appointmentIndex = this.appointments.findIndex((item) => {
+            return  new Date(item.date).getTime() === new Date(date).getTime()
         });
-        console.log('findbydate', date, this.appointments, findAppointment)
 
-        if(!findAppointment) {
+        if(appointmentIndex < 0) {
             return null;
         }
 
-        return findAppointment;
+        return this.appointments[appointmentIndex];
     }
 
     async create({ date, provider_id }: CreateParams): Promise<Appointment> {
