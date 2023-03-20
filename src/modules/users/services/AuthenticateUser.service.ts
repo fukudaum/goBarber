@@ -1,6 +1,6 @@
-import { compare } from "bcryptjs";
+import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
-import AppError from "shared/errors/AppErrors";
+import AppError from "../../../shared/errors/AppErrors";
 import { injectable, inject } from 'tsyringe';
 import User from "../entities/User";
 import { UsersRepository } from "../repositories/users.repository";

@@ -12,8 +12,8 @@ describe('CreateUser', () => {
             name: 'Provider Test',
             password: '123123',
             email: 'provider_teste@gmail.com'
-        })
-        console.log(provider)
+        });
+
         expect(provider).toHaveProperty('id');
     });
 
@@ -25,14 +25,13 @@ describe('CreateUser', () => {
             name: 'Provider Test',
             password: '123123',
             email: 'provider_teste@gmail.com'
-        })
-
+        });
 
         expect(createUserService.execute({
             name: 'Provider Test 2',
             password: '1231232',
             email: 'provider_teste@gmail.com'
-        })).rejects.toBeInstanceOf(AppError);;
+        })).rejects.toBeInstanceOf(AppError);
 
     });
 });
