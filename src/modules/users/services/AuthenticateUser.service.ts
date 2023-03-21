@@ -30,7 +30,9 @@ class AutheticateUserService {
         }
 
         const passwordMatched = await compare(password, findUser.password);
-
+        console.log(password, findUser.password)
+        const hashedPassword = await hash(password, 8)
+        console.log(hashedPassword)
         if(!passwordMatched) {
             throw new AppError('Incorrect email/password combination.', 401);
         }

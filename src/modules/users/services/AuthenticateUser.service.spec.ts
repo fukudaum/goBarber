@@ -13,12 +13,16 @@ describe('CreateUser', () => {
 
         const user = await createUserService.execute({
             name: 'Provider Test',
-            password: '123123',
+            password: 'teste',
             email: 'provider_teste@gmail.com'
         });
 
         if(user?.email) {
-            const response = await autheticateUserService.execute({ email: user.email, password: user.password })
+            const response = await autheticateUserService.execute({
+                email: 'provider_teste@gmail.com',
+                password: 'teste'
+            });
+
             expect(response).toHaveProperty('token');
         }
 
