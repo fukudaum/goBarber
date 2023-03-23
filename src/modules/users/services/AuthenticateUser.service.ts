@@ -1,9 +1,9 @@
-import { compare, hash } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import AppError from "../../../shared/errors/AppErrors";
 import { injectable, inject } from 'tsyringe';
 import User from "../entities/User";
 import { UsersRepository } from "../repositories/users.repository";
+import IHashProvider from "../providers/HashProvider/models/IHashProvider";
 
 interface Request {
     email: string
@@ -19,7 +19,10 @@ interface Response {
 class AutheticateUserService {
     constructor(
         @inject('UsersRepository')
-        private usersRepository: UsersRepository
+        private usersRepository: UsersRepository,
+
+        @inject('HashProvider')
+        private hashProvider: IHashProvider,
     ) {}
 
     public async execute({ email, password }: Request): Promise<Response> {
@@ -29,16 +32,13 @@ class AutheticateUserService {
             throw new AppError('Incorrect email/password combination.', 401);
         }
 
-        const passwordMatched = await compare(password, findUser.password);
-        console.log(password, findUser.password)
-        const hashedPassword = await hash(password, 8)
-        console.log(hashedPassword)
+        const passwordMatched = await this.hashProvider.compareHash(password, findUser.password);
         if(!passwordMatched) {
             throw new AppError('Incorrect email/password combination.', 401);
         }
 
         const secret = process.env.SECRET;
-
+        console.log(secret)
         if(secret) {
             const token = sign({  }, secret, {
                 subject: findUser.id,
