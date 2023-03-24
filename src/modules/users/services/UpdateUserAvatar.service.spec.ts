@@ -72,6 +72,29 @@ describe('UpdateUserAvatar', () => {
             if(updateUserAvatar)
                 expect(updateUserAvatar.avatar).toBe('avatar2.jpg');
         }
+    });
+
+    it('should return undefined because avatarFileName was not informed', async () => {
+        const fakeUsersRepository = new FakeUsersRepository();
+        const fakeStorageProvider = new FakeStorageProvider();
+
+        const updateUserAvatarService = new UpdateUserAvatarService(fakeUsersRepository, fakeStorageProvider);
+
+        const user = await fakeUsersRepository.create({
+            name: 'Teste',
+            email: 'teste@gmail.com',
+            password: '1234'
+        });
+
+        if(user?.id){
+            const updateUserAvatar = await updateUserAvatarService.execute({
+                user_id: user?.id,
+                avatarFileName: undefined,
+            });
+
+            if(updateUserAvatar)
+                expect(updateUserAvatar).toBe(undefined);
+        }
 
     });
 });

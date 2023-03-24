@@ -37,20 +37,17 @@ class AutheticateUserService {
             throw new AppError('Incorrect email/password combination.', 401);
         }
 
-        const secret = process.env.SECRET;
-        console.log(secret)
-        if(secret) {
-            const token = sign({  }, secret, {
-                subject: findUser.id,
-                expiresIn: process.env.EXPIRESIN,
-            });
+        const secret = process.env.SECRET ?? '';
 
-            return {
-                user: findUser,
-                token
-            }
+        const token = sign({  }, secret, {
+            subject: findUser.id,
+            expiresIn: process.env.EXPIRESIN,
+        });
+
+        return {
+            user: findUser,
+            token
         }
-        throw new AppError('Incorrect email/password combination.', 401);
     }
 }
 

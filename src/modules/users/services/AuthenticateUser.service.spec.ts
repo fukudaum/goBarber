@@ -1,4 +1,3 @@
-import { hash } from "bcryptjs";
 import "reflect-metadata";
 import AppError from "../../../shared/errors/AppErrors";
 import { FakeUsersRepository } from  "../../users/repositories/fakes/FakeUsers.repository";
@@ -17,7 +16,7 @@ describe('CreateUser', () => {
         }
     })
 
-    afterEach(() => {
+    afterAll(() => {
         process.env = env
     })
 
@@ -45,36 +44,56 @@ describe('CreateUser', () => {
 
     });
 
-    // it('should not be able to aunthenticate because email/password incorrect', async () => {
-    //     const fakeUsersRepository = new FakeUsersRepository();
-    //     const fakeHashProvider = new FakeHashProvider();
+    it('should not be able to aunthenticate because email/password incorrect', async () => {
+        const fakeUsersRepository = new FakeUsersRepository();
+        const fakeHashProvider = new FakeHashProvider();
 
-    //     const autheticateUserService = new AutheticateUserService(fakeUsersRepository, fakeHashProvider);
+        const autheticateUserService = new AutheticateUserService(fakeUsersRepository, fakeHashProvider);
 
-    //     expect(autheticateUserService.execute({
-    //         password: '1231232',
-    //         email: 'provider_teste@gmail.com'
-    //     })).rejects.toBeInstanceOf(AppError);
+        expect(autheticateUserService.execute({
+            password: '1231232',
+            email: 'provider_teste@gmail.com'
+        })).rejects.toBeInstanceOf(AppError);
 
-    // });
+    });
 
-    // it('should not be able to aunthenticate because password incorrect', async () => {
-    //     const fakeUsersRepository = new FakeUsersRepository();
-    //     const fakeHashProvider = new FakeHashProvider();
+    it('should not be able to aunthenticate because password incorrect', async () => {
+        const fakeUsersRepository = new FakeUsersRepository();
+        const fakeHashProvider = new FakeHashProvider();
 
-    //     const autheticateUserService = new AutheticateUserService(fakeUsersRepository, fakeHashProvider);
-    //     const createUserService = new CreateUserService(fakeUsersRepository, fakeHashProvider);
+        const autheticateUserService = new AutheticateUserService(fakeUsersRepository, fakeHashProvider);
+        const createUserService = new CreateUserService(fakeUsersRepository, fakeHashProvider);
 
-    //     await createUserService.execute({
-    //         name: 'Provider Test',
-    //         password: '123123',
-    //         email: 'provider_teste@gmail.com'
-    //     });
+        await createUserService.execute({
+            name: 'Provider Test',
+            password: '123123',
+            email: 'provider_teste@gmail.com'
+        });
 
-    //     expect(autheticateUserService.execute({
-    //         password: '1231232',
-    //         email: 'provider_teste@gmail.com'
-    //     })).rejects.toBeInstanceOf(AppError);
+        expect(autheticateUserService.execute({
+            password: '1231232',
+            email: 'provider_teste@gmail.com'
+        })).rejects.toBeInstanceOf(AppError);
 
-    // });
+    });
+
+    it('should not be able to aunthenticate because secret wasnt defined', async () => {
+        const fakeUsersRepository = new FakeUsersRepository();
+        const fakeHashProvider = new FakeHashProvider();
+
+        const autheticateUserService = new AutheticateUserService(fakeUsersRepository, fakeHashProvider);
+        const createUserService = new CreateUserService(fakeUsersRepository, fakeHashProvider);
+
+        await createUserService.execute({
+            name: 'Provider Test',
+            password: '123123',
+            email: 'provider_teste@gmail.com'
+        });
+
+        expect(autheticateUserService.execute({
+            password: '1231232',
+            email: 'provider_teste@gmail.com'
+        })).rejects.toBeInstanceOf(AppError);
+
+    });
 });
