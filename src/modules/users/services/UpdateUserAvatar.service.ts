@@ -1,11 +1,8 @@
 import { UsersRepository } from "../repositories/users.repository";
-import path from 'path';
-import fs from 'fs';
-import uploadConfig from "../../../config/upload";
 import { injectable, inject } from 'tsyringe';
 import User from "../entities/User";
-import AppError from "shared/errors/AppErrors";
-import IStorageProvider from "shared/container/provider/StorageProvider/model/IStorageProvider";
+import AppError from "../../../shared/errors/AppErrors";
+import IStorageProvider from "../../../shared/container/provider/StorageProvider/model/IStorageProvider";
 
 interface Request {
     user_id: string;
