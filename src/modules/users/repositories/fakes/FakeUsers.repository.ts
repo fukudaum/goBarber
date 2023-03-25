@@ -42,6 +42,7 @@ export class FakeUsersRepository implements UsersRepository {
     async create({name,
         password,
         email} : CreateUserDto): Promise<User | undefined> {
+
             const user: User = {
                 email,
                 name,

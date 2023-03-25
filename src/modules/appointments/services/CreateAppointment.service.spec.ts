@@ -31,7 +31,7 @@ describe('CreateAppointment', () => {
         const fakeUsersRepository = new FakeUsersRepository();
         const createAppointmentService = new CreateAppointmentService(fakeAppointmentsRepository, fakeUsersRepository);
 
-        expect(createAppointmentService.execute({
+        await expect(createAppointmentService.execute({
             date: new Date(),
             provider: 'provider_teste@gmail.com',
         })).rejects.toBeInstanceOf(AppError);;
@@ -56,7 +56,7 @@ describe('CreateAppointment', () => {
                 provider: provider.email,
             });
 
-            expect(createAppointmentService.execute({
+            await expect(createAppointmentService.execute({
                 date: date,
                 provider: provider.email,
             })).rejects.toBeInstanceOf(AppError);

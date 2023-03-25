@@ -26,3 +26,11 @@ model Appointment {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())
 }
+
+model UserToken {
+  id        String   @id @default(uuid())
+  token     String   @default(uuid())
+  user_id   String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @default(now())
+}
