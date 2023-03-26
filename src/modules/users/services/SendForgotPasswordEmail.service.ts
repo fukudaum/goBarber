@@ -1,6 +1,5 @@
 import AppError from "../../../shared/errors/AppErrors";
 import { injectable, inject } from 'tsyringe';
-import User from "../entities/User";
 import { UsersRepository } from "../repositories/users.repository";
 import IMailProvider from "../../../shared/container/provider/MailProvider/models/IMailProvider";
 import { UserTokenRepository } from "../repositories/userToken.repository";

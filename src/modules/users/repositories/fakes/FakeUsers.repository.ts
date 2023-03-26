@@ -11,6 +11,16 @@ export interface CreateUserDto {
 export class FakeUsersRepository implements UsersRepository {
     private users: User[] = [];
 
+    async updatePassword(userId: string, password: string): Promise<void> {
+        const user = this.users.find((item) => {
+            return item.id === userId
+        });
+
+        if(user) {
+            user.password = password;
+        }
+    }
+
     async findByEmail(email: string): Promise<User | null> {
         const findUser = this.users.find((user) => {
             return user.email === email
@@ -56,8 +66,14 @@ export class FakeUsersRepository implements UsersRepository {
             return user;
     }
 
-    async delete(): Promise<User> {
-        throw new Error("Method not implemented.");
+    async delete(userId: string): Promise<User> {
+        const userIndex = this.users.findIndex((item) => {
+            return item.id === userId
+        });
+
+        const foundUser = this.users.splice(userIndex, 1);
+
+        return foundUser[0];
     }
 
     async updateAvatar(avatar: string, userId: string): Promise<any> {

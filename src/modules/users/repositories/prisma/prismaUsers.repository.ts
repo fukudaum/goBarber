@@ -9,6 +9,10 @@ export interface CreateUserDto {
 }
 
 export class PrismaUserRepository implements UsersRepository {
+    async updatePassword(userId: string, password: string): Promise<void> {
+        throw new Error("Method not implemented.");
+    }
+
     async findByEmail(email: string): Promise<any | null> {
         return await prismaClient.user.findUnique({
             where: {
@@ -45,7 +49,7 @@ export class PrismaUserRepository implements UsersRepository {
         }
     }
 
-    async delete(): Promise<User> {
+    async delete(userId: string): Promise<User> {
         throw new Error("Method not implemented.");
     }
 

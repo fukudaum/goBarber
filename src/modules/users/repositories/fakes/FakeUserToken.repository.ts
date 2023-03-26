@@ -4,6 +4,15 @@ import { uuid } from 'uuidv4';
 
 export default class FakeUserTokenRepository implements UserTokenRepository {
     private usersToken: UserToken[] = [];
+
+    async findByToken(token: string): Promise<UserToken | undefined> {
+        const userToken = this.usersToken.find( (item) => {
+            return item.token === token
+        });
+
+        return userToken;
+    }
+
     async generate(user_id: string): Promise<UserToken> {
         const userToken: UserToken = {
             id: uuid(),
