@@ -10,7 +10,14 @@ export interface CreateUserDto {
 
 export class PrismaUserRepository implements UsersRepository {
     async updatePassword(userId: string, password: string): Promise<void> {
-        throw new Error("Method not implemented.");
+        await prismaClient.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                password
+            }
+        });
     }
 
     async findByEmail(email: string): Promise<any | null> {
