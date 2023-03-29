@@ -7,18 +7,26 @@ import MailProvider from './MailProvider/implementations/EtherealMailProvider';
 import { UserTokenRepository } from 'modules/users/repositories/userToken.repository';
 import PrismaUserTokenRepository from 'modules/users/repositories/prisma/prismaUserToken.repository';
 import EtherealMailProvider from './MailProvider/implementations/EtherealMailProvider';
+import IMailTemplateProvider from './MailTemplateProvider/models/IMailTemplateProvider';
+import HandlebarsMailTemplateProvider from './MailTemplateProvider/implementationis/HandlebarsMailTemplateProvider';
 
 container.registerSingleton<IStorageProvider>(
     'StorageProvider',
     DiskStorageProvider
 );
 
+container.registerSingleton<IMailTemplateProvider>(
+    'MailTemplateProvider',
+    HandlebarsMailTemplateProvider
+);
+
 container.registerInstance<IMailProvider>(
     'MailProvider',
-    new EtherealMailProvider()
-)
+    container.resolve(EtherealMailProvider)
+);
 
 container.registerSingleton<UserTokenRepository>(
     'UserTokenRepository',
     PrismaUserTokenRepository
-)
+);
+

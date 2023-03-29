@@ -4,12 +4,18 @@ import { FakeUsersRepository } from  "../../users/repositories/fakes/FakeUsers.r
 import { FakeAppointmentRepository } from "../repositories/fakes/FakeAppointment.repository";
 import CreateAppointmentService from "./CreateAppointment.service";
 
-describe('CreateAppointment', () => {
-    it('should be able to create a new appointment', async () => {
-        const fakeAppointmentsRepository = new FakeAppointmentRepository();
-        const fakeUsersRepository = new FakeUsersRepository();
-        const createAppointmentService = new CreateAppointmentService(fakeAppointmentsRepository, fakeUsersRepository);
+let fakeAppointmentsRepository: FakeAppointmentRepository;
+let fakeUsersRepository: FakeUsersRepository;
+let createAppointmentService: CreateAppointmentService;
 
+describe('CreateAppointment', () => {
+    beforeEach(() => {
+        fakeAppointmentsRepository = new FakeAppointmentRepository();
+        fakeUsersRepository = new FakeUsersRepository();
+        createAppointmentService = new CreateAppointmentService(fakeAppointmentsRepository, fakeUsersRepository);
+    })
+
+    it('should be able to create a new appointment', async () => {
         const provider = await fakeUsersRepository.create({
             name: 'Provider Test',
             password: '123123',
@@ -27,10 +33,6 @@ describe('CreateAppointment', () => {
     });
 
     it('should not be able to create a new appointment because provider doesnt exists', async () => {
-        const fakeAppointmentsRepository = new FakeAppointmentRepository();
-        const fakeUsersRepository = new FakeUsersRepository();
-        const createAppointmentService = new CreateAppointmentService(fakeAppointmentsRepository, fakeUsersRepository);
-
         await expect(createAppointmentService.execute({
             date: new Date(),
             provider: 'provider_teste@gmail.com',
@@ -39,10 +41,6 @@ describe('CreateAppointment', () => {
     });
 
     it('should not be able to create a new appointment on the same time', async () => {
-        const fakeAppointmentsRepository = new FakeAppointmentRepository();
-        const fakeUsersRepository = new FakeUsersRepository();
-        const createAppointmentService = new CreateAppointmentService(fakeAppointmentsRepository, fakeUsersRepository);
-
         const provider = await fakeUsersRepository.create({
             name: 'Provider Test',
             password: '123123',
