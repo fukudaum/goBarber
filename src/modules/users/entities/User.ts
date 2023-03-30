@@ -5,7 +5,7 @@ interface User {
     email: string
     createdAt?: Date | string | null
     updatedAt?: Date | string | null
-    avatar?: string
+    avatar?: string | null
 }
 
 export default User;

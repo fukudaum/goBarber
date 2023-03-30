@@ -1,5 +1,7 @@
 import User from "modules/users/entities/User";
-import { prismaClient } from "shared/infra/database/prisma.service";
+import AppError from "../../../../shared/errors/AppErrors";
+
+import { prismaClient } from "../../../../shared/infra/database/prisma.service";
 import { UsersRepository } from "../users.repository";
 
 export interface CreateUserDto {
@@ -9,6 +11,37 @@ export interface CreateUserDto {
 }
 
 export class PrismaUserRepository implements UsersRepository {
+    async update(userId: string, name: string, email: string, password: string): Promise<User> {
+        const user = await prismaClient.user.findUnique({
+            where: {
+                id: userId
+            }
+        });
+
+        let updatedPassword = user?.password;
+
+        if(password) {
+            updatedPassword = password
+        }
+
+        const updatedUser = await prismaClient.user.update({
+            where: {
+                id: userId
+            },
+            data: {
+                name,
+                email,
+                password: updatedPassword
+            }
+        });
+
+        if(!updatedUser) {
+            throw new AppError('User not found!');
+        }
+
+        return updatedUser;
+    }
+
     async updatePassword(userId: string, password: string): Promise<void> {
         await prismaClient.user.update({
             where: {

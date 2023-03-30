@@ -40,7 +40,7 @@ describe('UpdateUserAvatar', () => {
         await expect(updateUserAvatarService.execute({
             user_id: '1',
             avatarFileName: 'avatar.jpg',
-        })).rejects.toBeInstanceOf(AppError);;
+        })).rejects.toBeInstanceOf(AppError);
 
     });
 

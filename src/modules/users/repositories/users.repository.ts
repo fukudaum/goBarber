@@ -8,5 +8,6 @@ export interface UsersRepository {
     delete(userId: string): Promise<User>;
     updateAvatar(avatar: string, userId: string): Promise<User>;
     updatePassword(userId: string, password: string): Promise<void>;
+    update(userId: string, name: string, email: string, password?: string): Promise<User>;
 }
 

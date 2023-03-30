@@ -1,4 +1,5 @@
 import User from 'modules/users/entities/User';
+import AppError from '../../../../shared/errors/AppErrors';
 import { uuid } from 'uuidv4';
 import { UsersRepository } from '../users.repository';
 
@@ -10,6 +11,33 @@ export interface CreateUserDto {
 
 export class FakeUsersRepository implements UsersRepository {
     private users: User[] = [];
+
+    async update(userId: string, name: string, email: string, password?: string, oldPassword?: string): Promise<User> {
+        const user = this.users.find((item) => {
+            return item.id === userId
+        });
+
+        if(!user) {
+            throw new AppError('User not found!');
+        }
+
+        const userAlreadyExisting = this.users.find((item) => {
+            return item.email === email
+        });
+
+        if(userAlreadyExisting) {
+            throw new AppError('Email already registered!');
+        }
+
+        if(password) {
+            user.password = password
+        }
+
+        user.name = name;
+        user.email = email;
+
+        return user;
+    }
 
     async updatePassword(userId: string, password: string): Promise<void> {
         const user = this.users.find((item) => {
