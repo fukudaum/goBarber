@@ -9,5 +9,6 @@ export interface UsersRepository {
     updateAvatar(avatar: string, userId: string): Promise<User>;
     updatePassword(userId: string, password: string): Promise<void>;
     update(userId: string, name: string, email: string, password?: string): Promise<User>;
+    findAllProviders(exceptUserId?: string): Promise<User[]>;
 }
 

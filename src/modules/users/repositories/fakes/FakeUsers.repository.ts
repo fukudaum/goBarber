@@ -12,6 +12,22 @@ export interface CreateUserDto {
 export class FakeUsersRepository implements UsersRepository {
     private users: User[] = [];
 
+    async findAllProviders(exceptUserId?: string | undefined): Promise<User[]> {
+        let users = this.users;
+
+        if(exceptUserId) {
+            users = this.users.filter((item) => {
+                return item.id !== exceptUserId
+            });
+        }
+
+        if(!users?.length) {
+            throw new AppError('Users not found!');
+        }
+
+        return users;
+    }
+
     async update(userId: string, name: string, email: string, password?: string, oldPassword?: string): Promise<User> {
         const user = this.users.find((item) => {
             return item.id === userId

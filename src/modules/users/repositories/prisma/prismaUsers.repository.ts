@@ -1,3 +1,4 @@
+import FindAllProvidersDTO from "modules/users/dtos/FindAllProviders.dto";
 import User from "modules/users/entities/User";
 import AppError from "../../../../shared/errors/AppErrors";
 
@@ -11,6 +12,24 @@ export interface CreateUserDto {
 }
 
 export class PrismaUserRepository implements UsersRepository {
+    async findAllProviders({ exceptUserId }: FindAllProvidersDTO): Promise<User[]> {
+        let users: User[];
+
+        if(exceptUserId) {
+            users = await prismaClient.user.findMany({
+                where: {
+                    NOT: {
+                        id: exceptUserId
+                    }
+                }
+            });
+        } else {
+            users = await prismaClient.user.findMany();
+        }
+
+        return users;
+    }
+
     async update(userId: string, name: string, email: string, password: string): Promise<User> {
         const user = await prismaClient.user.findUnique({
             where: {
