@@ -5,7 +5,8 @@ import { isEqual } from 'date-fns';
 
 export interface CreateParams {
     date: Date,
-    provider_id: string
+    provider_id: string,
+    user_id: string
 }
 
 export class FakeAppointmentRepository implements AppointmentsRepository {
@@ -31,10 +32,11 @@ export class FakeAppointmentRepository implements AppointmentsRepository {
         return this.appointments[appointmentIndex];
     }
 
-    async create({ date, provider_id }: CreateParams): Promise<Appointment> {
+    async create({ date, provider_id, user_id }: CreateParams): Promise<Appointment> {
         let appointment: Appointment = {
             date,
             provider_id,
+            user_id,
             id: uuid(),
             createdAt: new Date(),
             updatedAt: new Date(),

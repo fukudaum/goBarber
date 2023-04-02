@@ -8,7 +8,8 @@ import { AppointmentsRepository } from "../repositories/appointments.repository"
 
 interface Request {
     provider: string,
-    date: Date
+    date: Date,
+    userId: string
 }
 
 @injectable()
@@ -19,7 +20,7 @@ class CreateAppointmentService {
         @inject('UsersRepository')
         private usersRepository: UsersRepository) {}
 
-    public async execute({ provider, date }: Request): Promise<Appointment> {
+    public async execute({ userId, provider, date }: Request): Promise<Appointment> {
         const appointmentDate = startOfHour(date);
         const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(appointmentDate);
         const findUser = await this.usersRepository.findByEmail(provider);
@@ -34,7 +35,9 @@ class CreateAppointmentService {
 
         const appointment = await this.appointmentsRepository.create({
             provider_id: findUser.id,
-            date: appointmentDate });
+            date: appointmentDate,
+            user_id: userId
+        });
 
         return appointment;
     }

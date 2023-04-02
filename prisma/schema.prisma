@@ -8,20 +8,23 @@ datasource db {
 }
 
 model User {
-  id          String        @id @default(uuid())
-  name        String
-  password    String
-  email       String        @unique
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @default(now())
-  avatar      String?       @default("")
-  Appointment Appointment[]
+  id                  String        @id @default(uuid())
+  name                String
+  password            String
+  email               String        @unique
+  createdAt           DateTime      @default(now())
+  updatedAt           DateTime      @default(now())
+  avatar              String?       @default("")
+  providerAppointment Appointment[] @relation("provider")
+  clientAppointment   Appointment[] @relation("client")
 }
 
 model Appointment {
   id          String   @id @default(uuid())
-  provider    User     @relation(fields: [provider_id], references: [id])
+  provider    User     @relation("provider", fields: [provider_id], references: [id])
   provider_id String
+  client      User     @relation("client", fields: [client_id], references: [id])
+  client_id   String
   date        DateTime
   createdAt   DateTime @default(now())
   updatedAt   DateTime @default(now())

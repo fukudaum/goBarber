@@ -26,6 +26,7 @@ describe('CreateAppointment', () => {
             const appointment = await createAppointmentService.execute({
                 date: new Date(),
                 provider: provider.email,
+                userId: provider.id
             });
 
             expect(appointment).toHaveProperty('id');
@@ -36,6 +37,7 @@ describe('CreateAppointment', () => {
         await expect(createAppointmentService.execute({
             date: new Date(),
             provider: 'provider_teste@gmail.com',
+            userId: 'teste'
         })).rejects.toBeInstanceOf(AppError);;
 
     });
@@ -45,19 +47,29 @@ describe('CreateAppointment', () => {
             name: 'Provider Test',
             password: '123123',
             email: 'provider_teste@gmail.com'
-        })
+        });
 
-        if(provider?.id) {
-            const date = new Date();
-            await createAppointmentService.execute({
-                date: date,
-                provider: provider.email,
-            });
+        const user = await fakeUsersRepository.create({
+            name: 'Provider Test',
+            password: '123123',
+            email: 'provider_teste@gmail.com'
+        });
 
-            await expect(createAppointmentService.execute({
-                date: date,
-                provider: provider.email,
-            })).rejects.toBeInstanceOf(AppError);
+        if(user.id) {
+            if(provider?.id) {
+                const date = new Date();
+                await createAppointmentService.execute({
+                    date: date,
+                    provider: provider.email,
+                    userId: user?.id
+                });
+
+                await expect(createAppointmentService.execute({
+                    date: date,
+                    provider: provider.email,
+                    userId: user?.id
+                })).rejects.toBeInstanceOf(AppError);
+            }
         }
     });
 });

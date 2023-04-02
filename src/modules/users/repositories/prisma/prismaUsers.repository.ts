@@ -92,19 +92,24 @@ export class PrismaUserRepository implements UsersRepository {
         });
     }
 
-    async create({name,
+    async create({
+        name,
         password,
-        email} : CreateUserDto): Promise<any | undefined> {
+        email
+    } : CreateUserDto): Promise<User> {
         try {
-            return await prismaClient.user.create({
+            const user = await prismaClient.user.create({
                 data: {
                     name,
                     password,
                     email
                 }
             });
+
+            return user;
         } catch (error) {
-           console.log(error)
+           console.log(error);
+           throw new AppError('Error creating user!');
         }
     }
 

@@ -96,8 +96,9 @@ export class FakeUsersRepository implements UsersRepository {
 
     async create({name,
         password,
-        email} : CreateUserDto): Promise<User | undefined> {
-
+        email
+    } : CreateUserDto): Promise<User> {
+        try {
             const user: User = {
                 email,
                 name,
@@ -109,6 +110,10 @@ export class FakeUsersRepository implements UsersRepository {
 
             this.users.push(user);
             return user;
+        } catch (error) {
+            throw new AppError('Error creating User');
+        }
+
     }
 
     async delete(userId: string): Promise<User> {
