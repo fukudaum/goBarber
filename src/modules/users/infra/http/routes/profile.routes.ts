@@ -1,4 +1,4 @@
-import { Request, Response, Router } from "express";
+import { Router } from "express";
 import ensureAuthenticated from "shared/infra/http/middleware/ensureAuthenticated";
 import ProfileController from "../controllers/Profile.controller";
 

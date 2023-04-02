@@ -2,6 +2,7 @@ import User from 'modules/users/entities/User';
 import AppError from '../../../../shared/errors/AppErrors';
 import { uuid } from 'uuidv4';
 import { UsersRepository } from '../users.repository';
+import FindAllProvidersDTO from 'modules/users/dtos/FindAllProviders.dto';
 
 export interface CreateUserDto {
     name: string
@@ -12,7 +13,7 @@ export interface CreateUserDto {
 export class FakeUsersRepository implements UsersRepository {
     private users: User[] = [];
 
-    async findAllProviders(exceptUserId?: string | undefined): Promise<User[]> {
+    async findAllProviders({ exceptUserId }: FindAllProvidersDTO): Promise<User[]> {
         let users = this.users;
 
         if(exceptUserId) {

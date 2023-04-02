@@ -13,7 +13,7 @@ interface TokenPayload {
 declare global {
     namespace Express {
         interface Request {
-        user?: {
+        user: {
             id: string
         }
         }
