@@ -6,13 +6,18 @@ interface Request {
     year: number;
 }
 
+type Response = Array<{
+    day: number;
+    available: boolean;
+}>;
+
 @injectable()
 class ListProviderMonthAvailabilityService {
     constructor(
     ) {}
 
-    public async execute({ user_id, month, year }: Request): Promise<void> {
-
+    public async execute({ user_id, month, year }: Request): Promise<Response> {
+        return [{ day: 1, available: false}];
     }
 }
 

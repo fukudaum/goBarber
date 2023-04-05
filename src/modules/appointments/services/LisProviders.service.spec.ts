@@ -7,7 +7,7 @@ let fakeUsersRepository: FakeUsersRepository;
 
 let listProvidersService: ListProvidersService;
 
-describe('Show Profile', () => {
+describe('List Providers', () => {
     beforeEach(() => {
         fakeUsersRepository = new FakeUsersRepository();
 
