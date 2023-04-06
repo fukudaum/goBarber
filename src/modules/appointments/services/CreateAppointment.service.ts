@@ -17,8 +17,10 @@ class CreateAppointmentService {
     constructor(
         @inject('AppointmentsRepository')
         private appointmentsRepository: AppointmentsRepository,
+
         @inject('UsersRepository')
-        private usersRepository: UsersRepository) {}
+        private usersRepository: UsersRepository
+    ) {}
 
     public async execute({ userId, provider, date }: Request): Promise<Appointment> {
         const appointmentDate = startOfHour(date);
